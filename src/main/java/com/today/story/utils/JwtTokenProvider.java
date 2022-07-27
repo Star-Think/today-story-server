@@ -1,4 +1,4 @@
-package com.bookflex.backend.utils;
+package com.today.story.utils;
 
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;

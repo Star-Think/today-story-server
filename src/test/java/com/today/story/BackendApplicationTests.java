@@ -1,4 +1,4 @@
-package com.bookflex.backend;
+package com.today.story;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

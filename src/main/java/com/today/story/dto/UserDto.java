@@ -1,4 +1,4 @@
-package com.bookflex.backend.dto;
+package com.today.story.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

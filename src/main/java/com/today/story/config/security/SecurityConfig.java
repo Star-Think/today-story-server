@@ -1,6 +1,6 @@
-package com.bookflex.backend.config.security;
+package com.today.story.config.security;
 
-import com.bookflex.backend.utils.JwtTokenProvider;
+import com.today.story.utils.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

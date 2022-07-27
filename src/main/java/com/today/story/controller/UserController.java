@@ -1,14 +1,14 @@
-package com.bookflex.backend.controller;
+package com.today.story.controller;
 
-import com.bookflex.backend.dto.LoginDto;
-import com.bookflex.backend.dto.UserDto;
-import com.bookflex.backend.dto.response.BaseResponse;
-import com.bookflex.backend.dto.response.SingleDataResponse;
-import com.bookflex.backend.exception.DuplicatedUsernameException;
-import com.bookflex.backend.exception.LoginFailedException;
-import com.bookflex.backend.exception.UserNotFoundException;
-import com.bookflex.backend.service.ResponseService;
-import com.bookflex.backend.service.UserService;
+import com.today.story.dto.LoginDto;
+import com.today.story.dto.UserDto;
+import com.today.story.dto.response.BaseResponse;
+import com.today.story.dto.response.SingleDataResponse;
+import com.today.story.exception.DuplicatedUsernameException;
+import com.today.story.exception.LoginFailedException;
+import com.today.story.exception.UserNotFoundException;
+import com.today.story.service.ResponseService;
+import com.today.story.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

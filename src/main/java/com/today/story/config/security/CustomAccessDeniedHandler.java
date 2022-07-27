@@ -1,4 +1,4 @@
-package com.bookflex.backend.config.security;
+package com.today.story.config.security;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

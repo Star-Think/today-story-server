@@ -1,8 +1,8 @@
-package com.bookflex.backend.service;
+package com.today.story.service;
 
-import com.bookflex.backend.dto.UserDto;
-import com.bookflex.backend.exception.UserNotFoundException;
-import com.bookflex.backend.mapper.UserMapper;
+import com.today.story.dto.UserDto;
+import com.today.story.exception.UserNotFoundException;
+import com.today.story.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

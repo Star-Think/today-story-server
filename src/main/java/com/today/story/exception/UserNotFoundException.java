@@ -1,4 +1,4 @@
-package com.bookflex.backend.exception;
+package com.today.story.exception;
 
 public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException() {

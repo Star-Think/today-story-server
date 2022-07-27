@@ -3,21 +3,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bookflex.backend.mapper.UserMapper">
+<mapper namespace="com.today.story.mapper.UserMapper">
     <select id="findUserByUsername" resultType="UserDto">
         SELECT user_id userId, username, password, role
-        FROM user
+        FROM USER_CD
         WHERE username = #{username}
     </select>
 
     <select id="findByUserId" resultType="UserDto">
         SELECT user_id userId, username, PASSWORD, role
-        FROM user
+        FROM USER_CD
         WHERE user_id = #{userId}
     </select>
     
     <insert id="save" parameterType="UserDto">
-        INSERT INTO user (username, password)
+        INSERT INTO USER_CD (username, password)
         VALUES ( #{username}, #{password} )
     </insert>
 </mapper>

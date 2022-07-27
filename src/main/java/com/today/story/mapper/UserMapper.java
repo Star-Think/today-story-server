@@ -1,6 +1,6 @@
-package com.bookflex.backend.mapper;
+package com.today.story.mapper;
 
-import com.bookflex.backend.dto.UserDto;
+import com.today.story.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Optional;

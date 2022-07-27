@@ -1,4 +1,4 @@
-package com.bookflex.backend.dto;
+package com.today.story.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

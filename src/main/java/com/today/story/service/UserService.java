@@ -1,12 +1,12 @@
-package com.bookflex.backend.service;
+package com.today.story.service;
 
-import com.bookflex.backend.exception.UserNotFoundException;
-import com.bookflex.backend.utils.JwtTokenProvider;
-import com.bookflex.backend.dto.LoginDto;
-import com.bookflex.backend.dto.UserDto;
-import com.bookflex.backend.exception.DuplicatedUsernameException;
-import com.bookflex.backend.exception.LoginFailedException;
-import com.bookflex.backend.mapper.UserMapper;
+import com.today.story.exception.UserNotFoundException;
+import com.today.story.utils.JwtTokenProvider;
+import com.today.story.dto.LoginDto;
+import com.today.story.dto.UserDto;
+import com.today.story.exception.DuplicatedUsernameException;
+import com.today.story.exception.LoginFailedException;
+import com.today.story.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

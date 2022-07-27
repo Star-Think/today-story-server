@@ -1,4 +1,4 @@
-package com.bookflex.backend;
+package com.today.story;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

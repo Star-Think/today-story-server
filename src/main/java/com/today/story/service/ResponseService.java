@@ -1,8 +1,8 @@
-package com.bookflex.backend.service;
+package com.today.story.service;
 
-import com.bookflex.backend.dto.response.BaseResponse;
-import com.bookflex.backend.dto.response.ListDataResponse;
-import com.bookflex.backend.dto.response.SingleDataResponse;
+import com.today.story.dto.response.BaseResponse;
+import com.today.story.dto.response.ListDataResponse;
+import com.today.story.dto.response.SingleDataResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
