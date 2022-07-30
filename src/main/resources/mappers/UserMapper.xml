@@ -4,20 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.today.story.mapper.UserMapper">
-    <select id="findUserByUsername" resultType="UserDto">
-        SELECT user_id userId, username, password, role
-        FROM USER_CD
-        WHERE username = #{username}
+    <select id="findUserByUsername" resultType="com.today.story.dto.UserDto">
+        SELECT idx, user_id, nickname, password, role
+        FROM SYS_USER_CD
+        WHERE user_id = #{user_id}
     </select>
 
-    <select id="findByUserId" resultType="UserDto">
-        SELECT user_id userId, username, PASSWORD, role
-        FROM USER_CD
-        WHERE user_id = #{userId}
+    <select id="findByUserId" resultType="com.today.story.dto.UserDto">
+        SELECT idx, user_id, nickname, password, role
+        FROM SYS_USER_CD
+        WHERE user_id = #{user_id}
     </select>
     
-    <insert id="save" parameterType="UserDto">
-        INSERT INTO USER_CD (username, password)
-        VALUES ( #{username}, #{password} )
+    <insert id="save" parameterType="com.today.story.dto.UserDto">
+        INSERT INTO SYS_USER_CD (USER_ID,NICKNAME, PASSWORD,REG_DATE)
+        VALUES (#{user_id}, #{nickname}, #{password} ,GETDATE())
     </insert>
 </mapper>

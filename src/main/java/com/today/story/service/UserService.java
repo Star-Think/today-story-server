@@ -36,17 +36,17 @@ public class UserService {
     }
 
     public String login(LoginDto loginDto) {
-        UserDto userDto = userMapper.findUserByUsername(loginDto.getUsername())
+        UserDto userDto = userMapper.findUserByUsername(loginDto.getUser_id())
                 .orElseThrow(() -> new LoginFailedException("잘못된 아이디입니다"));
 
         if (!passwordEncoder.matches(loginDto.getPassword(), userDto.getPassword())) {
             throw new LoginFailedException("잘못된 비밀번호입니다");
         }
 
-        return jwtTokenProvider.createToken(userDto.getUserId(), Collections.singletonList(userDto.getRole()));
+        return jwtTokenProvider.createToken(userDto.getUser_id(), Collections.singletonList(userDto.getRole()));
     }
 
-    public UserDto findByUserId(Long userId) {
+    public UserDto findByUserId(String userId) {
         return userMapper.findByUserId(userId)
                 .orElseThrow(() -> new UserNotFoundException("없는 유저입니다."));
     }

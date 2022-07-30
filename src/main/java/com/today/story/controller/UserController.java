@@ -70,7 +70,7 @@ public class UserController {
     public ResponseEntity findUserByUsername(final Authentication authentication) {
         ResponseEntity responseEntity = null;
         try {
-            Long userId = ((UserDto) authentication.getPrincipal()).getUserId();
+            String userId = ((UserDto) authentication.getPrincipal()).getUser_id();
             UserDto findUser = userService.findByUserId(userId);
 
             SingleDataResponse<UserDto> response = responseService.getSingleDataResponse(true, "조회 성공", findUser);

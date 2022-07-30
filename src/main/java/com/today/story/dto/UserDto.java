@@ -13,8 +13,9 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto implements UserDetails {
-    private Long userId;
-    private String username;
+    private Long idx;
+    private String user_id;
+    private String nickname;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String role;
@@ -36,7 +37,7 @@ public class UserDto implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.user_id;
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
