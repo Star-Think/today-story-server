@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.today.story.main.diary.DiaryMapper">
+    <select id="diaryGet" resultType="com.today.story.main.diary.dto.DiaryVO">
+        SELECT A.* ,
+        B.NICKNAME,
+        CASE WHEN A.TYPE = '0' THEN '모두공개' ELSE '비공개' END AS TYPE_NAME
+        FROM SYS_STORY_CD A
+        LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
+        WHERE (A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id})
+        ORDER BY A.SEQ DESC
+        OFFSET (#{page}-1)*#{rows} ROWS
+        FETCH NEXT #{rows} ROWS ONLY;
+    </select>
+
+    <select id="diaryCount" resultType="int">
+        SELECT count(seq)
+        FROM SYS_STORY_CD
+         WHERE (TYPE = '0') OR (TYPE = '1' AND USER_ID = #{user_id})
+    </select>
+
+    <select id="diaryDetail" resultType="com.today.story.main.diary.dto.DiaryVO">
+        SELECT A.* ,
+        B.NICKNAME,
+        CASE WHEN A.TYPE = '0' THEN '모두공개' ELSE '비공개' END AS TYPE_NAME
+        FROM SYS_STORY_CD A
+        LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
+        WHERE ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id})) AND A.SEQ = #{seq}
+    </select>
+
+    <select id="commentList" resultType="com.today.story.main.diary.dto.CommentVO">
+        SELECT A.* ,
+        B.NICKNAME,
+        CASE WHEN A.TYPE = '0' THEN '공개' ELSE '비공개' END AS TYPE_NAME
+        FROM SYS_STORY_COMMENT_CD A
+        LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
+        WHERE ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id})) AND A.STORY_SEQ = #{seq}
+        ORDER BY A.SEQ DESC
+    </select>
+
+    <insert id="diaryAdd">
+        INSERT INTO SYS_STORY_CD
+        (TITLE, CONTENT, [TYPE], [VIEW], USER_ID, CREATE_DATE, UPDATE_DATE)
+        VALUES(#{title}, #{content}, #{type}, 0, #{user_id}, GETDATE(), GETDATE());
+
+    </insert>
+
+    <update id="diaryUpdate">
+        UPDATE SYS_STORY_CD SET
+        TITLE = #{title},
+        CONTENT = #{content},
+        [TYPE] = #{type},
+        UPDATE_DATE = GETDATE()
+        WHERE SEQ = #{seq} AND USER_ID = #{user_id}
+    </update>
+
+
+    <update id="diaryClick">
+        UPDATE SYS_STORY_CD SET
+        [VIEW] = [VIEW] + 1
+        WHERE SEQ = #{seq}
+    </update>
+
+    <delete id="diaryDelete">
+        DELETE FROM SYS_STORY_CD
+        WHERE SEQ = #{seq}
+    </delete>
+
+    <delete id="commentStoryDelete">
+        DELETE FROM SYS_STORY_COMMENT_CD
+        WHERE STORY_SEQ = #{seq}
+    </delete>
+
+    <insert id="commentAdd">
+        INSERT INTO SYS_STORY_COMMENT_CD
+        (STORY_SEQ, CONTENT, [TYPE], USER_ID, CREATE_DATE, UPDATE_DATE)
+        VALUES(#{story_seq}, #{content}, #{type}, #{user_id}, GETDATE(), GETDATE());
+    </insert>
+
+    <update id="commentUpdate">
+        UPDATE SYS_STORY_COMMENT_CD SET
+        CONTENT = #{content},
+        [TYPE] = #{type},
+        UPDATE_DATE = GETDATE()
+        WHERE SEQ = #{seq} AND USER_ID = #{user_id}
+    </update>
+
+    <delete id="commentDelete">
+        DELETE FROM SYS_STORY_COMMENT_CD
+        WHERE SEQ = #{seq}
+    </delete>
+
+    <insert id="reportAdd">
+        INSERT INTO SYS_REPORT_CD
+        (REPORT_SEQ, CONTENT, [TYPE], USER_ID, CREATE_DATE)
+        VALUES(#{report_seq}, #{content}, #{type}, #{user_id}, GETDATE());
+    </insert>
+
+</mapper>
