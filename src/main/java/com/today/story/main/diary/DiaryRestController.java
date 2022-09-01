@@ -26,7 +26,7 @@ public class DiaryRestController {
     @Autowired
     private DiaryService diaryService;
 
-
+    // 일기조회
     @GetMapping("/diaryGet")
     public ResponseEntity diaryGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.diaryGet(authentication,pageVO);
