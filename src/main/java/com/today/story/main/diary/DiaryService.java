@@ -35,7 +35,10 @@ public class DiaryService {
     public ResponseEntity diaryGet(Authentication authentication, PageVO pageVO) {
         ResponseEntity responseEntity = null;
         try {
-            String userId = ((UserDto) authentication.getPrincipal()).getUser_id();
+            String userId = "";
+            if (authentication != null) {
+                userId = ((UserDto) authentication.getPrincipal()).getUser_id();
+            }
 
             pageVO.setUser_id(userId);
 
@@ -74,7 +77,11 @@ public class DiaryService {
     public ResponseEntity diaryDetail(Authentication authentication, PageVO pageVO) {
         ResponseEntity responseEntity = null;
         try {
-            String userId = ((UserDto) authentication.getPrincipal()).getUser_id();
+            String userId = "";
+
+            if(authentication != null){
+                userId = ((UserDto) authentication.getPrincipal()).getUser_id();
+            }
 
             pageVO.setUser_id(userId);
 
