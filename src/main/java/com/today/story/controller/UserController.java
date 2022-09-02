@@ -7,6 +7,7 @@ import com.today.story.dto.response.SingleDataResponse;
 import com.today.story.exception.DuplicatedUsernameException;
 import com.today.story.exception.LoginFailedException;
 import com.today.story.exception.UserNotFoundException;
+import com.today.story.main.common.dto.PageVO;
 import com.today.story.service.ResponseService;
 import com.today.story.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -84,5 +85,10 @@ public class UserController {
         }
 
         return responseEntity;
+    }
+
+    @GetMapping("/userNameGet")
+    public ResponseEntity userNameGet(@RequestBody PageVO pageVO) {
+        return userService.userNameGet(pageVO);
     }
 }

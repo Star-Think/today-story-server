@@ -7,5 +7,6 @@ public class PageVO {
     private int page;
     private int rows;
     private String user_id;
+    private String view_id;
     private int seq;
 }

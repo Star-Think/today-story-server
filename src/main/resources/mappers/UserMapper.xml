@@ -11,7 +11,7 @@
     </select>
 
     <select id="findByUserId" resultType="com.today.story.dto.UserDto">
-        SELECT idx, user_id, nickname, password, role
+        SELECT idx, user_id, nickname, password, role, email
         FROM SYS_USER_CD
         WHERE user_id = #{user_id}
     </select>
@@ -20,4 +20,10 @@
         INSERT INTO SYS_USER_CD (USER_ID,NICKNAME, PASSWORD,REG_DATE)
         VALUES (#{user_id}, #{nickname}, #{password} ,GETDATE())
     </insert>
+
+    <select id="userNameGet" resultType="com.today.story.dto.UserDto">
+        SELECT user_id, nickname
+        FROM SYS_USER_CD
+        WHERE user_id = #{user_id}
+    </select>
 </mapper>

@@ -38,4 +38,12 @@ public interface DiaryMapper {
     void commentDelete(CommentVO commentVO);
 
     void reportAdd(ReportVO reportVO);
+
+    List<CommentVO> commentGet(PageVO pageVO);
+
+    int commentCount(PageVO pageVO);
+
+    List<CommentVO> commentReceivedGet(PageVO pageVO);
+
+    int commentReceivedCount(PageVO pageVO);
 }

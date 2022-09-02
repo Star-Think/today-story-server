@@ -10,16 +10,40 @@
         CASE WHEN A.TYPE = '0' THEN '모두공개' ELSE '비공개' END AS TYPE_NAME
         FROM SYS_STORY_CD A
         LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
-        WHERE (A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id})
+        WHERE 1=1
+        <choose>
+            <when test="view_id == user_id">
+                AND A.USER_ID = #{view_id}
+            </when>
+            <when test="view_id != null">
+                AND (A.TYPE = '0' AND A.USER_ID = #{view_id})
+            </when>
+            <otherwise>
+                AND ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id}))
+            </otherwise>
+        </choose>
+        AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
         ORDER BY A.SEQ DESC
         OFFSET (#{page}-1)*#{rows} ROWS
         FETCH NEXT #{rows} ROWS ONLY;
     </select>
 
     <select id="diaryCount" resultType="int">
-        SELECT count(seq)
-        FROM SYS_STORY_CD
-         WHERE (TYPE = '0') OR (TYPE = '1' AND USER_ID = #{user_id})
+        SELECT count(A.seq)
+        FROM SYS_STORY_CD A
+         WHERE 1=1
+        <choose>
+            <when test="view_id == user_id">
+                AND A.USER_ID = #{view_id}
+            </when>
+            <when test="view_id != null">
+                AND (A.TYPE = '0' AND A.USER_ID = #{view_id})
+            </when>
+            <otherwise>
+                AND ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id}))
+            </otherwise>
+        </choose>
+        AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
     </select>
 
     <select id="diaryDetail" resultType="com.today.story.main.diary.dto.DiaryVO">
@@ -98,5 +122,82 @@
         (REPORT_SEQ, CONTENT, [TYPE], USER_ID, CREATE_DATE)
         VALUES(#{report_seq}, #{content}, #{type}, #{user_id}, GETDATE());
     </insert>
+
+    <select id="commentGet" resultType="com.today.story.main.diary.dto.CommentVO">
+        SELECT A.* ,
+        B.NICKNAME,
+        CASE WHEN A.TYPE = '0' THEN '공개' ELSE '비공개' END AS TYPE_NAME
+        FROM SYS_STORY_COMMENT_CD A
+        LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
+        WHERE 1=1
+        <choose>
+            <when test="view_id == user_id">
+                AND A.USER_ID = #{view_id}
+            </when>
+            <otherwise>
+                AND (A.TYPE = '0' AND A.USER_ID = #{view_id})
+            </otherwise>
+        </choose>
+        AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        ORDER BY A.SEQ DESC
+        OFFSET (#{page}-1)*#{rows} ROWS
+        FETCH NEXT #{rows} ROWS ONLY;
+    </select>
+
+    <select id="commentCount" resultType="int">
+        SELECT count(A.seq)
+        FROM SYS_STORY_COMMENT_CD A
+        WHERE 1=1
+        <choose>
+            <when test="view_id == user_id">
+                AND A.USER_ID = #{view_id}
+            </when>
+            <otherwise>
+                AND (A.TYPE = '0' AND A.USER_ID = #{view_id})
+            </otherwise>
+        </choose>
+        AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+    </select>
+
+
+    <select id="commentReceivedGet" resultType="com.today.story.main.diary.dto.CommentVO">
+        SELECT A.* ,
+        B.NICKNAME,
+        CASE WHEN A.TYPE = '0' THEN '공개' ELSE '비공개' END AS TYPE_NAME
+        FROM SYS_STORY_COMMENT_CD A
+        LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
+        WHERE 1=1
+        <choose>
+            <when test="view_id == user_id">
+                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE A.USER_ID = #{view_id})
+                AND ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{view_id}))
+            </when>
+            <otherwise>
+                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE A.TYPE = '0' AND A.USER_ID = #{view_id})
+                AND A.TYPE = '0'
+            </otherwise>
+        </choose>
+        AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        ORDER BY A.SEQ DESC
+        OFFSET (#{page}-1)*#{rows} ROWS
+        FETCH NEXT #{rows} ROWS ONLY;
+    </select>
+
+    <select id="commentReceivedCount" resultType="int">
+        SELECT count(A.seq)
+        FROM SYS_STORY_COMMENT_CD A
+        WHERE 1=1
+        <choose>
+            <when test="view_id == user_id">
+                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE A.USER_ID = #{view_id})
+                AND ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{view_id}))
+            </when>
+            <otherwise>
+                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE A.TYPE = '0' AND A.USER_ID = #{view_id})
+                AND A.TYPE = '0'
+            </otherwise>
+        </choose>
+        AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+    </select>
 
 </mapper>

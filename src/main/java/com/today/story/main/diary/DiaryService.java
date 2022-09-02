@@ -261,4 +261,92 @@ public class DiaryService {
 
         return responseEntity;
     }
+
+    public ResponseEntity commentGet(Authentication authentication, PageVO pageVO) {
+        ResponseEntity responseEntity = null;
+        try {
+
+            String userId = "";
+            if (authentication != null) {
+                userId = ((UserDto) authentication.getPrincipal()).getUser_id();
+            }
+
+            pageVO.setUser_id(userId);
+
+
+            if(pageVO.getPage() == 0) {
+                pageVO.setPage(1);
+            }
+
+            if (pageVO.getRows() == 0) {
+                pageVO.setRows(10);
+            }
+
+            List<CommentVO> commentVOList = diaryMapper.commentGet(pageVO);
+
+            int totalCount = diaryMapper.commentCount(pageVO);
+
+            JSONObject jobj = new JSONObject();
+
+            jobj.put("list",commentVOList);
+            jobj.put("count",totalCount);
+
+
+
+            SingleDataResponse<JSONObject> response = responseService.getSingleDataResponse(true, "조회 성공",jobj);
+
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (UserNotFoundException exception) {
+            logger.debug(exception.getMessage());
+            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
+
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        return responseEntity;
+    }
+
+    public ResponseEntity commentReceivedGet(Authentication authentication, PageVO pageVO) {
+        ResponseEntity responseEntity = null;
+        try {
+
+            String userId = "";
+            if (authentication != null) {
+                userId = ((UserDto) authentication.getPrincipal()).getUser_id();
+            }
+
+            pageVO.setUser_id(userId);
+
+
+            if(pageVO.getPage() == 0) {
+                pageVO.setPage(1);
+            }
+
+            if (pageVO.getRows() == 0) {
+                pageVO.setRows(10);
+            }
+
+            List<CommentVO> commentVOList = diaryMapper.commentReceivedGet(pageVO);
+
+            int totalCount = diaryMapper.commentReceivedCount(pageVO);
+
+            JSONObject jobj = new JSONObject();
+
+            jobj.put("list",commentVOList);
+            jobj.put("count",totalCount);
+
+
+
+            SingleDataResponse<JSONObject> response = responseService.getSingleDataResponse(true, "조회 성공",jobj);
+
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (UserNotFoundException exception) {
+            logger.debug(exception.getMessage());
+            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
+
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        return responseEntity;
+    }
 }

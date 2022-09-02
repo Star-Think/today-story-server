@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.today.story.main.mypage.MyPageMapper">
+    <select id="myPageGet" resultType="com.today.story.main.mypage.dto.UserVO">
+        SELECT USER_ID,NICKNAME,EMAIL,SELF
+        FROM SYS_USER_CD
+        WHERE USER_ID = #{user_id}
+    </select>
+    <update id="myPageUpdate">
+        UPDATE SYS_USER_CD SET
+        NICKNAME = #{nickname},
+        EMAIL = #{email},
+        SELF = #{self}
+        WHERE USER_ID = #{user_id}
+    </update>
+
+    <update id="passwordChange">
+        UPDATE SYS_USER_CD SET
+        PASSWORD = #{new_password}
+        WHERE USER_ID = #{user_id}
+    </update>
+
+    <select id="blockUserGet" resultType="com.today.story.main.mypage.dto.BlockVO">
+        SELECT A.USER_ID, A.BLOCK_ID, B.NICKNAME AS BLOCK_NICKNAME
+        FROM SYS_USER_BLOCK_CD A
+        LEFT JOIN SYS_USER_CD B ON A.BLOCK_ID = B.USER_ID
+        WHERE A.USER_ID = #{user_id}
+    </select>
+
+    <insert id="blockUserAdd">
+        INSERT INTO SYS_USER_BLOCK_CD (USER_ID, BLOCK_ID, CREATE_DATE)
+        VALUES(#{user_id}, #{block_id}, GETDATE());
+    </insert>
+
+    <delete id="blockUserDelete">
+        DELETE FROM SYS_USER_BLOCK_CD
+        WHERE USER_ID = #{user_id} AND BLOCK_ID = #{block_id}
+    </delete>
+
+    <select id="blockUserCheck" resultType="Integer">
+        SELECT count(A.SEQ)
+        FROM SYS_USER_BLOCK_CD A
+        WHERE A.USER_ID = #{user_id} AND A.BLOCK_ID = #{block_id}
+    </select>
+</mapper>

@@ -19,6 +19,8 @@ public class UserDto implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String role;
+    private String email;
+    private String self;
 
 
     // 이하 코드는 security 를 위한 용도

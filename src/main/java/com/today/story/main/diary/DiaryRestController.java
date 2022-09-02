@@ -71,4 +71,15 @@ public class DiaryRestController {
     public ResponseEntity reportAdd(final Authentication authentication, @RequestBody ReportVO reportVO) {
         return diaryService.reportAdd(authentication,reportVO);
     }
+
+    @GetMapping("/commentGet")
+    public ResponseEntity commentGet(final Authentication authentication, @RequestBody PageVO pageVO) {
+        return diaryService.commentGet(authentication,pageVO);
+    }
+
+    @GetMapping("/commentReceivedGet")
+    public ResponseEntity commentReceivedGet(final Authentication authentication, @RequestBody PageVO pageVO) {
+        return diaryService.commentReceivedGet(authentication,pageVO);
+    }
+
 }
