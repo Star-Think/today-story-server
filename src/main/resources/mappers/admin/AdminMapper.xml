@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.today.story.main.admin.AdminMapper">
+    <select id="reportDiaryGet" resultType="com.today.story.main.admin.dto.AdminReport">
+        SELECT B.SEQ,B.TITLE,B.CONTENT,A.REPORT_ID, A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ
+        FROM SYS_REPORT_CD A
+        LEFT JOIN SYS_STORY_CD B ON A.REPORT_SEQ = B.SEQ
+        WHERE A.TYPE = '0' AND A.STATE like CONCAT('%',#{keyword},'%')
+        ORDER BY A.SEQ DESC
+        OFFSET (#{page}-1)*#{rows} ROWS
+        FETCH NEXT #{rows} ROWS ONLY;
+    </select>
+    <select id="reportDiaryCount" resultType="int">
+        SELECT COUNT(A.SEQ)
+        FROM SYS_REPORT_CD A
+        WHERE A.TYPE = '0' AND A.STATE like CONCAT('%',#{keyword},'%')
+    </select>
+
+    <select id="reportCommentGet" resultType="com.today.story.main.admin.dto.AdminReport">
+        SELECT B.SEQ,B.CONTENT,A.REPORT_ID , A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ
+        FROM SYS_REPORT_CD A
+        LEFT JOIN SYS_STORY_COMMENT_CD B ON A.REPORT_SEQ = B.SEQ
+        WHERE A.TYPE = '1' AND A.STATE like CONCAT('%',#{keyword},'%')
+        ORDER BY A.SEQ DESC
+        OFFSET (#{page}-1)*#{rows} ROWS
+        FETCH NEXT #{rows} ROWS ONLY;
+    </select>
+    <select id="reportCommentCount" resultType="int">
+        SELECT COUNT(A.SEQ)
+        FROM SYS_REPORT_CD A
+        WHERE A.TYPE = '1' AND A.STATE like CONCAT('%',#{keyword},'%')
+    </select>
+
+    <select id="reportUserGet" resultType="com.today.story.main.admin.dto.AdminReport">
+        SELECT B.NICKNAME,B.SELF,A.REPORT_ID , A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ
+        FROM SYS_REPORT_CD A
+        LEFT JOIN SYS_USER_CD B ON A.REPORT_ID = B.USER_ID
+        WHERE A.TYPE = '2' AND A.STATE like CONCAT('%',#{keyword},'%')
+        ORDER BY A.SEQ DESC
+        OFFSET (#{page}-1)*#{rows} ROWS
+        FETCH NEXT #{rows} ROWS ONLY;
+    </select>
+    <select id="reportUserCount" resultType="int">
+        SELECT COUNT(A.SEQ)
+        FROM SYS_REPORT_CD A
+        WHERE A.TYPE = '2' AND A.STATE like CONCAT('%',#{keyword},'%')
+    </select>
+
+    <update id="reportCompletion">
+        UPDATE SYS_REPORT_CD SET
+        STATE = #{keyword}
+        WHERE seq = #{seq}
+    </update>
+
+    <select id="reportCompletionCount" resultType="int">
+        SELECT COUNT(A.SEQ)
+        FROM SYS_REPORT_CD A
+        WHERE A.STATE = '1' AND A.REPORT_ID = (SELECT REPORT_ID FROM SYS_REPORT_CD WHERE SEQ = #{seq} )
+    </select>
+
+    <update id="adminDiaryDelete">
+        UPDATE SYS_STORY_CD SET
+        USE_YN = 'N'
+        WHERE seq = (SELECT REPORT_SEQ FROM SYS_REPORT_CD WHERE SEQ =  #{seq})
+    </update>
+
+    <update id="adminCommentDelete">
+        UPDATE SYS_STORY_COMMENT_CD SET
+        USE_YN = 'N'
+        WHERE seq = (SELECT REPORT_SEQ FROM SYS_REPORT_CD WHERE SEQ =  #{seq})
+    </update>
+
+    <update id="adminUserNameDelete">
+        UPDATE SYS_USER_CD SET
+        NICKNAME = '부적절언어사용자',
+        SELF = '부적절언어사용자'
+        WHERE USER_ID = (SELECT REPORT_ID FROM SYS_REPORT_CD WHERE SEQ =  #{seq})
+    </update>
+</mapper>

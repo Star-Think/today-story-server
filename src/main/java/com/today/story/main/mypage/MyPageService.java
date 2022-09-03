@@ -211,4 +211,32 @@ public class MyPageService {
         }
         return responseEntity;
     }
+
+    public ResponseEntity userDelete(Authentication authentication) {
+        ResponseEntity responseEntity = null;
+        try {
+            String userId = ((UserDto) authentication.getPrincipal()).getUser_id();
+
+            PageVO pageVO = new PageVO();
+
+            pageVO.setUser_id(userId);
+
+            myPageMapper.userDelete(pageVO);
+
+            myPageMapper.receivedCommentDelete(pageVO);
+            myPageMapper.userCommentDelete(pageVO);
+            myPageMapper.userDiaryDelete(pageVO);
+            myPageMapper.userBlockDelete(pageVO);
+
+            BaseResponse response = responseService.getBaseResponse(true, "삭제 성공");
+
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (UserNotFoundException exception) {
+            logger.debug(exception.getMessage());
+            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
+
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+        return responseEntity;
+    }
 }

@@ -8,5 +8,7 @@ public class PageVO {
     private int rows;
     private String user_id;
     private String view_id;
+    private String keyword;
+    private String type;
     private int seq;
 }

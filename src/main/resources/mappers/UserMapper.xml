@@ -13,7 +13,7 @@
     <select id="findByUserId" resultType="com.today.story.dto.UserDto">
         SELECT idx, user_id, nickname, password, role, email
         FROM SYS_USER_CD
-        WHERE user_id = #{user_id}
+        WHERE user_id = #{user_id} AND use_yn = 'Y'
     </select>
     
     <insert id="save" parameterType="com.today.story.dto.UserDto">

@@ -50,4 +50,11 @@ public class MyPageRestController {
     public ResponseEntity blockUserCheck(final Authentication authentication, @RequestBody BlockVO blockVO) {
         return myPageService.blockUserCheck(authentication,blockVO);
     }
+
+
+    @PostMapping("/userDelete")
+    public ResponseEntity userDelete(final Authentication authentication) {
+        return myPageService.userDelete(authentication);
+    }
+
 }

@@ -48,8 +48,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/*/commentGet",
                         "/*/commentReceivedGet"
                 ).permitAll()
-                .anyRequest().hasRole("USER")
-
+                .antMatchers(
+                     "/*/reportDiaryGet",
+                    "/*/reportCommentGet",
+                    "/*/reportUserGet",
+                    "/*/reportCompletion"
+                ).hasRole("ADMIN")
+                .anyRequest().hasAnyRole("USER","ADMIN")
                 .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()

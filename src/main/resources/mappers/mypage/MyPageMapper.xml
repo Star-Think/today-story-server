@@ -45,4 +45,30 @@
         FROM SYS_USER_BLOCK_CD A
         WHERE A.USER_ID = #{user_id} AND A.BLOCK_ID = #{block_id}
     </select>
+
+    <update id="userDelete">
+        UPDATE SYS_USER_CD SET
+        USE_YN = 'N'
+        WHERE USER_ID = #{user_id}
+    </update>
+
+    <delete id="receivedCommentDelete">
+        DELETE FROM SYS_STORY_COMMENT_CD
+        WHERE STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE  USER_ID = #{user_id})
+    </delete>
+
+    <delete id="userCommentDelete">
+        DELETE FROM SYS_STORY_COMMENT_CD
+        WHERE USER_ID = #{user_id}
+    </delete>
+
+    <delete id="userDiaryDelete">
+        DELETE FROM SYS_STORY_CD
+        WHERE USER_ID = #{user_id}
+    </delete>
+
+    <delete id="userBlockDelete">
+        DELETE FROM SYS_USER_BLOCK_CD
+        WHERE BLOCK_ID = #{user_id}
+    </delete>
 </mapper>

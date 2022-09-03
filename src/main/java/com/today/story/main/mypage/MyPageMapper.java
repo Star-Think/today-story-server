@@ -25,4 +25,14 @@ public interface MyPageMapper {
     void blockUserDelete(BlockVO blockVO);
 
     int blockUserCheck(BlockVO blockVO);
+
+    void userDelete(PageVO pageVO);
+
+    void receivedCommentDelete(PageVO pageVO);
+
+    void userCommentDelete(PageVO pageVO);
+
+    void userDiaryDelete(PageVO pageVO);
+
+    void userBlockDelete(PageVO pageVO);
 }

@@ -13,4 +13,5 @@ public class ReportVO {
     private Date create_date;
     private String state;
     private String content;
+    private String report_id;
 }

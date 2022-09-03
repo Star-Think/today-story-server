@@ -23,6 +23,9 @@
             </otherwise>
         </choose>
         AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
         ORDER BY A.SEQ DESC
         OFFSET (#{page}-1)*#{rows} ROWS
         FETCH NEXT #{rows} ROWS ONLY;
@@ -44,6 +47,9 @@
             </otherwise>
         </choose>
         AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
     </select>
 
     <select id="diaryDetail" resultType="com.today.story.main.diary.dto.DiaryVO">
@@ -53,6 +59,9 @@
         FROM SYS_STORY_CD A
         LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
         WHERE ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id})) AND A.SEQ = #{seq}
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
     </select>
 
     <select id="commentList" resultType="com.today.story.main.diary.dto.CommentVO">
@@ -62,6 +71,9 @@
         FROM SYS_STORY_COMMENT_CD A
         LEFT JOIN SYS_USER_CD B ON A.USER_ID = B.USER_ID
         WHERE ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{user_id})) AND A.STORY_SEQ = #{seq}
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
         ORDER BY A.SEQ DESC
     </select>
 
@@ -89,12 +101,14 @@
     </update>
 
     <delete id="diaryDelete">
-        DELETE FROM SYS_STORY_CD
-        WHERE SEQ = #{seq}
+        UPDATE SYS_STORY_CD SET
+        [TYPE] = '2'
+        WHERE SEQ = #{seq} AND USER_ID = #{user_id}
     </delete>
 
     <delete id="commentStoryDelete">
-        DELETE FROM SYS_STORY_COMMENT_CD
+        UPDATE SYS_STORY_COMMENT_CD SET
+        [TYPE] = '2'
         WHERE STORY_SEQ = #{seq}
     </delete>
 
@@ -113,14 +127,15 @@
     </update>
 
     <delete id="commentDelete">
-        DELETE FROM SYS_STORY_COMMENT_CD
-        WHERE SEQ = #{seq}
+        UPDATE SYS_STORY_COMMENT_CD SET
+        [TYPE] = '2'
+        WHERE SEQ = #{seq} AND USER_ID = #{user_id}
     </delete>
 
     <insert id="reportAdd">
         INSERT INTO SYS_REPORT_CD
-        (REPORT_SEQ, CONTENT, [TYPE], USER_ID, CREATE_DATE)
-        VALUES(#{report_seq}, #{content}, #{type}, #{user_id}, GETDATE());
+        (REPORT_SEQ, CONTENT, [TYPE], USER_ID, CREATE_DATE,REPORT_ID)
+        VALUES(#{report_seq}, #{content}, #{type}, #{user_id}, GETDATE(),#{report_id});
     </insert>
 
     <select id="commentGet" resultType="com.today.story.main.diary.dto.CommentVO">
@@ -139,6 +154,9 @@
             </otherwise>
         </choose>
         AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
         ORDER BY A.SEQ DESC
         OFFSET (#{page}-1)*#{rows} ROWS
         FETCH NEXT #{rows} ROWS ONLY;
@@ -157,6 +175,9 @@
             </otherwise>
         </choose>
         AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
     </select>
 
 
@@ -178,6 +199,9 @@
             </otherwise>
         </choose>
         AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
         ORDER BY A.SEQ DESC
         OFFSET (#{page}-1)*#{rows} ROWS
         FETCH NEXT #{rows} ROWS ONLY;
@@ -198,6 +222,9 @@
             </otherwise>
         </choose>
         AND A.USER_ID NOT IN (SELECT BLOCK_ID FROM SYS_USER_BLOCK_CD WHERE USER_ID = #{user_id})
+        <![CDATA[
+        AND A.TYPE <> '2'
+        ]]>
     </select>
 
 </mapper>
