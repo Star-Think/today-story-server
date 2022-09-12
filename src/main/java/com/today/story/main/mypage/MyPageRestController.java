@@ -16,7 +16,7 @@ public class MyPageRestController {
     @Autowired
     private MyPageService myPageService;
 
-    @GetMapping("/myPageGet")
+    @PostMapping("/myPageGet")
     public ResponseEntity myPageGet(final Authentication authentication) {
         return myPageService.myPageGet(authentication);
     }
@@ -31,7 +31,7 @@ public class MyPageRestController {
         return myPageService.passwordChange(authentication,userVO);
     }
 
-    @GetMapping("/blockUserGet")
+    @PostMapping("/blockUserGet")
     public ResponseEntity blockUserGet(final Authentication authentication) {
         return myPageService.blockUserGet(authentication);
     }
@@ -46,7 +46,7 @@ public class MyPageRestController {
         return myPageService.blockUserDelete(authentication,blockVO);
     }
 
-    @GetMapping("/blockUserCheck")
+    @PostMapping("/blockUserCheck")
     public ResponseEntity blockUserCheck(final Authentication authentication, @RequestBody BlockVO blockVO) {
         return myPageService.blockUserCheck(authentication,blockVO);
     }

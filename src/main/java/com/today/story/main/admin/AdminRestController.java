@@ -13,17 +13,17 @@ public class AdminRestController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping("/reportDiaryGet")
+    @PostMapping("/reportDiaryGet")
     public ResponseEntity reportDiaryGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return adminService.reportDiaryGet(authentication,pageVO);
     }
 
-    @GetMapping("/reportCommentGet")
+    @PostMapping("/reportCommentGet")
     public ResponseEntity reportCommentGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return adminService.reportCommentGet(authentication,pageVO);
     }
 
-    @GetMapping("/reportUserGet")
+    @PostMapping("/reportUserGet")
     public ResponseEntity reportUserGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return adminService.reportUserGet(authentication,pageVO);
     }

@@ -5,9 +5,11 @@
 
 <mapper namespace="com.today.story.main.admin.AdminMapper">
     <select id="reportDiaryGet" resultType="com.today.story.main.admin.dto.AdminReport">
-        SELECT B.SEQ,B.TITLE,B.CONTENT,A.REPORT_ID, A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ
+        SELECT B.SEQ,B.TITLE,B.CONTENT,A.REPORT_ID, A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ , C.NICKNAME AS USERNAME,A.TYPE,A.CREATE_DATE,A.STATE
+        ,CASE WHEN A.STATE = '0' THEN '신고중' WHEN A.STATE = '1' THEN '승인' ELSE '미승인' END AS STATE_NAME
         FROM SYS_REPORT_CD A
         LEFT JOIN SYS_STORY_CD B ON A.REPORT_SEQ = B.SEQ
+        LEFT JOIN SYS_USER_CD C ON A.USER_ID = C.USER_ID
         WHERE A.TYPE = '0' AND A.STATE like CONCAT('%',#{keyword},'%')
         ORDER BY A.SEQ DESC
         OFFSET (#{page}-1)*#{rows} ROWS
@@ -20,9 +22,11 @@
     </select>
 
     <select id="reportCommentGet" resultType="com.today.story.main.admin.dto.AdminReport">
-        SELECT B.SEQ,B.CONTENT,A.REPORT_ID , A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ
+        SELECT B.SEQ,B.CONTENT,A.REPORT_ID , A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ, C.NICKNAME AS USERNAME,A.TYPE,A.CREATE_DATE,A.STATE
+        ,CASE WHEN A.STATE = '0' THEN '신고중' WHEN A.STATE = '1' THEN '승인' ELSE '미승인' END AS STATE_NAME
         FROM SYS_REPORT_CD A
         LEFT JOIN SYS_STORY_COMMENT_CD B ON A.REPORT_SEQ = B.SEQ
+        LEFT JOIN SYS_USER_CD C ON A.USER_ID = C.USER_ID
         WHERE A.TYPE = '1' AND A.STATE like CONCAT('%',#{keyword},'%')
         ORDER BY A.SEQ DESC
         OFFSET (#{page}-1)*#{rows} ROWS
@@ -35,9 +39,11 @@
     </select>
 
     <select id="reportUserGet" resultType="com.today.story.main.admin.dto.AdminReport">
-        SELECT B.NICKNAME,B.SELF,A.REPORT_ID , A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ
+        SELECT B.NICKNAME,B.SELF,A.REPORT_ID , A.CONTENT AS REPORT_CONTENT, A.SEQ AS REPORT_SEQ, C.NICKNAME AS USERNAME,A.TYPE,A.CREATE_DATE,A.STATE
+        ,CASE WHEN A.STATE = '0' THEN '신고중' WHEN A.STATE = '1' THEN '승인' ELSE '미승인' END AS STATE_NAME
         FROM SYS_REPORT_CD A
         LEFT JOIN SYS_USER_CD B ON A.REPORT_ID = B.USER_ID
+        LEFT JOIN SYS_USER_CD C ON A.USER_ID = C.USER_ID
         WHERE A.TYPE = '2' AND A.STATE like CONCAT('%',#{keyword},'%')
         ORDER BY A.SEQ DESC
         OFFSET (#{page}-1)*#{rows} ROWS
@@ -63,13 +69,13 @@
 
     <update id="adminDiaryDelete">
         UPDATE SYS_STORY_CD SET
-        USE_YN = 'N'
+        [TYPE] = '2'
         WHERE seq = (SELECT REPORT_SEQ FROM SYS_REPORT_CD WHERE SEQ =  #{seq})
     </update>
 
     <update id="adminCommentDelete">
         UPDATE SYS_STORY_COMMENT_CD SET
-        USE_YN = 'N'
+        [TYPE] = '2'
         WHERE seq = (SELECT REPORT_SEQ FROM SYS_REPORT_CD WHERE SEQ =  #{seq})
     </update>
 

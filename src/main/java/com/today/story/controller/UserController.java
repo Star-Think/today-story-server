@@ -87,7 +87,7 @@ public class UserController {
         return responseEntity;
     }
 
-    @GetMapping("/userNameGet")
+    @PostMapping("/userNameGet")
     public ResponseEntity userNameGet(@RequestBody PageVO pageVO) {
         return userService.userNameGet(pageVO);
     }

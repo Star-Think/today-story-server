@@ -27,12 +27,12 @@ public class DiaryRestController {
     private DiaryService diaryService;
 
     // 일기조회
-    @GetMapping("/diaryGet")
+    @PostMapping("/diaryGet")
     public ResponseEntity diaryGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.diaryGet(authentication,pageVO);
     }
 
-    @GetMapping("/diaryDetail")
+    @PostMapping("/diaryDetail")
     public ResponseEntity diaryDetail(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.diaryDetail(authentication,pageVO);
     }
@@ -72,12 +72,12 @@ public class DiaryRestController {
         return diaryService.reportAdd(authentication,reportVO);
     }
 
-    @GetMapping("/commentGet")
+    @PostMapping("/commentGet")
     public ResponseEntity commentGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.commentGet(authentication,pageVO);
     }
 
-    @GetMapping("/commentReceivedGet")
+    @PostMapping("/commentReceivedGet")
     public ResponseEntity commentReceivedGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.commentReceivedGet(authentication,pageVO);
     }
