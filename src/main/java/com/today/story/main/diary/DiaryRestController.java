@@ -32,51 +32,61 @@ public class DiaryRestController {
         return diaryService.diaryGet(authentication,pageVO);
     }
 
+    // 일기상세
     @PostMapping("/diaryDetail")
     public ResponseEntity diaryDetail(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.diaryDetail(authentication,pageVO);
     }
 
+    // 일기저장
     @PostMapping("/diaryAdd")
     public ResponseEntity diaryAdd(final Authentication authentication, @RequestBody DiaryVO diaryVO) {
         return diaryService.diaryAdd(authentication,diaryVO);
     }
 
+    // 일기수정
     @PostMapping("/diaryUpdate")
     public ResponseEntity diaryUpdate(final Authentication authentication, @RequestBody DiaryVO diaryVO) {
         return diaryService.diaryUpdate(authentication,diaryVO);
     }
 
+    // 일기삭제
     @PostMapping("/diaryDelete")
     public ResponseEntity diaryDelete(final Authentication authentication, @RequestBody DiaryVO diaryVO) {
         return diaryService.diaryDelete(authentication,diaryVO);
     }
 
+    // 댓글추가
     @PostMapping("/commentAdd")
     public ResponseEntity commentAdd(final Authentication authentication, @RequestBody CommentVO commentVO) {
         return diaryService.commentAdd(authentication,commentVO);
     }
 
+    // 댓글수정
     @PostMapping("/commentUpdate")
     public ResponseEntity commentUpdate(final Authentication authentication, @RequestBody CommentVO commentVO) {
         return diaryService.commentUpdate(authentication,commentVO);
     }
 
+    // 댓글삭제
     @PostMapping("/commentDelete")
     public ResponseEntity commentDelete(final Authentication authentication, @RequestBody CommentVO commentVO) {
         return diaryService.commentDelete(authentication,commentVO);
     }
 
+    // 신고추가
     @PostMapping("/reportAdd")
     public ResponseEntity reportAdd(final Authentication authentication, @RequestBody ReportVO reportVO) {
         return diaryService.reportAdd(authentication,reportVO);
     }
 
+    // 댓글쓴거조회
     @PostMapping("/commentGet")
     public ResponseEntity commentGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.commentGet(authentication,pageVO);
     }
 
+    // 댓글받은거조회
     @PostMapping("/commentReceivedGet")
     public ResponseEntity commentReceivedGet(final Authentication authentication, @RequestBody PageVO pageVO) {
         return diaryService.commentReceivedGet(authentication,pageVO);
