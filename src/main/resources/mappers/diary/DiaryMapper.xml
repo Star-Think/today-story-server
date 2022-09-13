@@ -213,11 +213,11 @@
         WHERE 1=1
         <choose>
             <when test="view_id == user_id">
-                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE A.USER_ID = #{view_id})
+                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE  USER_ID = #{view_id})
                 AND ((A.TYPE = '0') OR (A.TYPE = '1' AND A.USER_ID = #{view_id}))
             </when>
             <otherwise>
-                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE A.TYPE = '0' AND A.USER_ID = #{view_id})
+                AND A.STORY_SEQ IN (SELECT SEQ FROM SYS_STORY_CD WHERE [TYPE] = '0' AND USER_ID = #{view_id})
                 AND A.TYPE = '0'
             </otherwise>
         </choose>
