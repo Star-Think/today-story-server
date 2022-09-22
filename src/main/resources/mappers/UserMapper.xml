@@ -22,7 +22,7 @@
     </insert>
 
     <select id="userNameGet" resultType="com.today.story.dto.UserDto">
-        SELECT user_id, nickname
+        SELECT user_id, nickname,email,self
         FROM SYS_USER_CD
         WHERE user_id = #{user_id}
     </select>
