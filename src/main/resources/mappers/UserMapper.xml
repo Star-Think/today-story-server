@@ -26,4 +26,20 @@
         FROM SYS_USER_CD
         WHERE user_id = #{user_id}
     </select>
+
+    <select id="userIdFindGet" resultType="com.today.story.dto.UserDto">
+        SELECT user_id
+        FROM SYS_USER_CD
+         <![CDATA[
+        WHERE email = #{email} and email <> '' and email is not null
+        ]]>
+    </select>
+
+    <select id="userPwdFindGet" resultType="com.today.story.dto.UserDto">
+        SELECT user_id
+        FROM SYS_USER_CD
+         <![CDATA[
+        WHERE email = #{email} and email <> '' and email is not null and user_id=#{user_id}
+        ]]>
+    </select>
 </mapper>

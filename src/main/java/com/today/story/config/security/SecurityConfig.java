@@ -46,7 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/*/diaryDetail",
                         "/*/userNameGet",
                         "/*/commentGet",
-                        "/*/commentReceivedGet"
+                        "/*/commentReceivedGet",
+                        "/*/userIdFindGet",
+                        "/*/userPwdFindGet"
                 ).permitAll()
                 .antMatchers(
                      "/*/reportDiaryGet",

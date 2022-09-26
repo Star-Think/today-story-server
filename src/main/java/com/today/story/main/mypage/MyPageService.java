@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,8 @@ public class MyPageService {
 
     @Autowired
     private MyPageMapper myPageMapper;
+
+
 
     public ResponseEntity myPageGet(Authentication authentication) {
         ResponseEntity responseEntity = null;
@@ -71,11 +74,19 @@ public class MyPageService {
 
             userVO.setUser_id(userId);
 
-            myPageMapper.myPageUpdate(userVO);
 
-            BaseResponse response = responseService.getBaseResponse(true, "수정 성공");
+
+            UserVO userVO1 = myPageMapper.userEmailGet(userVO);
+            BaseResponse response;
+            if(userVO1 == null || userVO1.getUser_id().equals(userId)){
+                response  = responseService.getBaseResponse(true, "수정 성공");
+                myPageMapper.myPageUpdate(userVO);
+            } else {
+                response  = responseService.getBaseResponse(false, "이미 쓰고 있는 이메일입니다.");
+            }
 
             responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(response);
+
         } catch (UserNotFoundException exception) {
             logger.debug(exception.getMessage());
             BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());

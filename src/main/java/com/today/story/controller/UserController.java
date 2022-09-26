@@ -91,4 +91,14 @@ public class UserController {
     public ResponseEntity userNameGet(@RequestBody PageVO pageVO) {
         return userService.userNameGet(pageVO);
     }
+
+    @PostMapping("/userIdFindGet")
+    public ResponseEntity userIdFindGet(@RequestBody PageVO pageVO) {
+        return userService.userIdFindGet(pageVO);
+    }
+
+    @PostMapping("/userPwdFindGet")
+    public ResponseEntity userPwdFindGet(@RequestBody PageVO pageVO) {
+        return userService.userPwdFindGet(pageVO);
+    }
 }

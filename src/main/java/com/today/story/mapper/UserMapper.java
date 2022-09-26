@@ -13,4 +13,8 @@ public interface UserMapper {
     void save(UserDto userDto);
 
     UserDto userNameGet(PageVO pageVO);
+
+    UserDto userIdFindGet(PageVO pageVO);
+
+    UserDto userPwdFindGet(PageVO pageVO);
 }

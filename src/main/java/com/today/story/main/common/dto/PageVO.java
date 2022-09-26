@@ -10,5 +10,6 @@ public class PageVO {
     private String view_id;
     private String keyword;
     private String type;
+    private String email;
     private int seq;
 }

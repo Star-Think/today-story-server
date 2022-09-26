@@ -35,4 +35,6 @@ public interface MyPageMapper {
     void userDiaryDelete(PageVO pageVO);
 
     void userBlockDelete(PageVO pageVO);
+
+    UserVO userEmailGet(UserVO userVO);
 }
