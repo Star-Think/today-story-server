@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/today-story-server-0.0.1-SNAPSHOT.jar
+web: java -jar build/libs/prototype-0.0.1-SNAPSHOT.war
