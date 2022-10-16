@@ -61,7 +61,7 @@
         WHERE seq = #{seq}
     </update>
 
-    <select id="reportCompletionCount" resultType="int">
+    <select id="reportCompletionCount" resultType="integer">
         SELECT COUNT(A.SEQ)
         FROM SYS_REPORT_CD A
         WHERE A.STATE = '1' AND A.REPORT_ID = (SELECT REPORT_ID FROM SYS_REPORT_CD WHERE SEQ = #{seq} )
@@ -85,4 +85,11 @@
         SELF = '부적절언어사용자'
         WHERE USER_ID = (SELECT REPORT_ID FROM SYS_REPORT_CD WHERE SEQ =  #{seq})
     </update>
+
+    <select id="adminUserSeqGet" resultType="com.today.story.main.mypage.dto.UserVO">
+       SELECT
+       USER_ID
+       FROM SYS_USER_CD
+       WHERE USER_ID = (SELECT REPORT_ID FROM SYS_REPORT_CD WHERE SEQ =  #{seq})
+    </select>
 </mapper>

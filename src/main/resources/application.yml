@@ -1,8 +1,8 @@
 spring:
   datasource:
 
-#    url: jdbc:sqlserver://star-think.ddns.net:19830;databaseName=today-story
-    url: jdbc:sqlserver://localhost:19830;databaseName=today-story
+    url: jdbc:sqlserver://122.39.136.92/:19830;databaseName=today-story
+#    url: jdbc:sqlserver://localhost:19830;databaseName=today-story
     username: reactuser
     password: reactpwd12#
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

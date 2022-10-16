@@ -3,6 +3,7 @@ package com.today.story.config.security;
 import com.today.story.utils.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -56,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/*/reportUserGet",
                     "/*/reportCompletion"
                 ).hasRole("ADMIN")
+                .antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
                 .anyRequest().hasAnyRole("USER","ADMIN")
                 .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())

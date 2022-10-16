@@ -10,6 +10,7 @@ import com.today.story.main.common.dto.PageVO;
 import com.today.story.main.diary.dto.CommentVO;
 import com.today.story.main.diary.dto.DiaryVO;
 import com.today.story.main.mypage.MyPageMapper;
+import com.today.story.main.mypage.dto.UserVO;
 import com.today.story.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -160,6 +161,9 @@ public class AdminService {
                 }
             }
             if(reportCount > 3) {
+                UserVO userVO =  adminMapper.adminUserSeqGet(pageVO);
+                pageVO.setUser_id(userVO.getUser_id());
+
                 myPageMapper.userDelete(pageVO);
 
                 myPageMapper.receivedCommentDelete(pageVO);
