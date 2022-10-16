@@ -1,1 +1,1 @@
-web: java -jar build/libs/prototype-0.0.1-SNAPSHOT.war
+web: java -jar build/libs/today-story-server-0.0.1-SNAPSHOT.jar
